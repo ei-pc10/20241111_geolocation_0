@@ -27,12 +27,12 @@
         // デバイスのOSを判定
         const isAndroid = /Android/i.test(navigator.userAgent);
 
-        // Androidの場合、モデルのスケールを5倍に設定
+        // Androidの場合、モデルのスケールを直接変更
         const modelEntity = document.getElementById('modelEntity');
         if (isAndroid) {
-            modelEntity.setAttribute('scale', '0.5 0.5 0.5');  // Android用のスケール
+            modelEntity.object3D.scale.set(0.5, 0.5, 0.5);  // Android用のスケールを直接変更
         } else {
-            modelEntity.setAttribute('scale', '0.3 0.3 0.3');  // iOS用のスケール
+            modelEntity.object3D.scale.set(0.3, 0.3, 0.3);  // iOS用のスケールを直接変更
         }
 
         // ユーザーの位置情報を取得
