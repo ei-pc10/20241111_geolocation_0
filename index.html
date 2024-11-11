@@ -15,7 +15,7 @@
         <a-entity id="modelEntity" 
                   gltf-model="https://raw.githubusercontent.com/ei-pc10/hitomania_3d/main/model.glb" 
                   position="0 0 0" 
-                  scale="1 1 1"
+                  scale="0.3 0.3 0.3"
                   look-at="[camera]">
         </a-entity>
 
@@ -24,6 +24,17 @@
     </a-scene>
 
     <script>
+        // デバイスのOSを判定
+        const isAndroid = /Android/i.test(navigator.userAgent);
+
+        // Androidの場合、モデルのスケールを5倍に設定
+        const modelEntity = document.getElementById('modelEntity');
+        if (isAndroid) {
+            modelEntity.setAttribute('scale', '0.8 0.8 0.8');  // Android用のスケール
+        } else {
+            modelEntity.setAttribute('scale', '0.3 0.3 0.3');  // iOS用のスケール
+        }
+
         // ユーザーの位置情報を取得
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -31,7 +42,6 @@
                 const longitude = position.coords.longitude;
 
                 // 取得した位置情報をAR.jsのエンティティに適用
-                const modelEntity = document.getElementById('modelEntity');
                 modelEntity.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                 console.log(`位置情報を設定: 緯度 ${latitude}, 経度 ${longitude}`);
             }, function(error) {
